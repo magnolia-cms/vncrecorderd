@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  vncrecorder:
+    build:
+      context: .
+    image: mgnl/vncrecorder:1.0-alpine
+    container_name: vncrecorder
+    env_file:
+      - .env
+    ports:
+      - ${GRPC_PORT}:3000
+    expose:
+      - ${GRPC_PORT}
+    volumes:
+      - ${RECORDINGS_DIR}:/recordings
+    networks:
+      - mgnl-integration-tests
+
+
+networks:
+  mgnl-integration-tests:
+    name: ${SELENIUM_BRIDGE_NETWORK}
+    external: true

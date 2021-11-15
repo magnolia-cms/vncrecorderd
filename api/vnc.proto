@@ -1,0 +1,34 @@
+syntax = 'proto3';
+
+option go_package = "/api";
+option java_package = "info.magnolia.test.vnc";
+
+service VncRecorder {
+  rpc Start(VncRequest) returns (VncResponse) {}
+  rpc Stop(VncRequest) returns (VncResponse) {}
+  rpc Remove(VncRequest) returns (VncResponse) {}
+}
+
+message VncRequest {
+  string host = 1;
+  optional int32 port = 2;
+  optional string fileName = 3;
+  optional MediaType mediaType = 4;
+}
+
+message VncResponse {
+  VncStatus status = 1;
+  string message = 2;
+}
+
+enum VncStatus {
+  STARTED = 0;
+  DONE = 1;
+  FAILURE = 2;
+}
+
+enum MediaType {
+  MP4 = 0;
+  FLV = 1;
+  MPEG = 3;
+}
