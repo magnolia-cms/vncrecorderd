@@ -1,4 +1,4 @@
-# Vnc Recorder Service
+# Vnc Recorder Daemon
 
 A golang based gRPC service API that connects to a VNC host and records the frames using
 `ffmpeg` library and `vnc2video`.
