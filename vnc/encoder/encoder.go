@@ -115,6 +115,7 @@ type X264ImageCustomEncoder struct {
 	closed             bool
 	Framerate          int
 	ConstantRateFactor int
+	Abort              bool
 }
 
 func (enc *X264ImageCustomEncoder) Init() {
@@ -207,4 +208,21 @@ func (enc *X264ImageCustomEncoder) Close() {
 	}
 
 	log.Infof("[FFMPEG] Shutdown %s (%s)", enc.VideoFileName, time.Now().Sub(t))
+	enc.Post()
+}
+
+func (enc *X264ImageCustomEncoder) Post() {
+
+	//if enc.Abort
+
+	exec.Command(enc.ffmpegPath,
+		"-y",
+		"-i", enc.VideoFileName,
+		"-vcodec", "libx265",
+		"-preset", "veryfast",
+		"-tag:v", "hvc1",
+		"post"+enc.VideoFileName,
+		"-hide_banner",
+	).Start()
+
 }

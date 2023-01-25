@@ -30,6 +30,7 @@ type Recording struct {
 	options       RecordOptions
 	conn          *connection
 	done          chan bool
+	remove        chan bool
 	restart       bool
 	vcodec        *encoder.X264ImageCustomEncoder
 	ffmpegStarted chan bool
