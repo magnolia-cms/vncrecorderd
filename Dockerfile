@@ -33,12 +33,13 @@ RUN go mod download > /dev/null 2>&1
 
 RUN go mod verify > /dev/null 2>&1
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/vncrecorder > /dev/null 2>&1
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /go/bin/vncrecorder > /dev/null 2>&1
 
 FROM jrottenberg/ffmpeg:4.1-alpine
 
 ENV UID=${UID:-1000} \
-    GID=${GID:-1000}
+    GID=${GID:-1000} \
+    LOG_FILE=/recordings/vnc.log
 
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
